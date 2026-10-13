@@ -1,11 +1,11 @@
 {
-  "name": "Max Apps",
+  "name": "Apps Home",
   "short_name": "Apps",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#F5F5F5",
-  "theme_color": "#F5F5F5",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
   "icons": [
     {
       "src": "icon-192.png",
