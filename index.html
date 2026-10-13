@@ -109,47 +109,4 @@ const h=location.hash.slice(1);if(document.getElementById('t-'+h))show(h);
 document.getElementById('share').onclick=async e=>{const url=location.href.split('#')[0],text='Apps Home';
 if(navigator.share){try{await navigator.share({title:text,text,url});return}catch(x){if(x.name==='AbortError')return}}
 try{await navigator.clipboard.writeText(url);e.target.textContent='Copied';setTimeout(()=>e.target.textContent='Share',1600)}catch(x){location.href='sms:?&body='+encodeURIComponent(text+' '+url)}};
-</script><style>
-#pop{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:5vh 5vw;background:rgba(250,246,238,.94);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
-#pop.on{display:flex}
-#pop .step{display:none;flex-direction:column;align-items:center;gap:14px;max-width:100%;max-height:100%}#pop .step.on{display:flex}
-#pop img{display:block;max-width:100%;max-height:calc(90vh - 150px);width:auto;height:auto;border:1px solid var(--mw-border);background:#fff;box-shadow:0 10px 40px rgba(10,10,10,.10)}
-#pop .scroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--mw-border);background:#fff;box-shadow:0 10px 40px rgba(10,10,10,.10)}
-#pop .scroll img{border:0;box-shadow:none;max-height:none;max-width:none;width:min(1500px,90vw)}
-@media(max-width:899px){#pop .scroll img{width:auto;height:min(240px,40vh)}}
-#pop .cap{font-family:var(--mw-font-heading);font-weight:700;font-size:22px;color:var(--mw-foreground);text-decoration:none;border-bottom:1px solid rgba(10,10,10,.3)}
-#pop .hint{font-size:13px;color:var(--mw-muted-text);margin:-6px 0 0}@media(min-width:900px){#pop .hint{display:none}}
-#pop .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-#pop .b{min-height:56px;min-width:160px;border:2px solid var(--mw-primary);background:#fff;color:var(--mw-primary);font:600 16px var(--mw-font-body);text-transform:uppercase;letter-spacing:var(--mw-tracking-label);border-radius:0;cursor:pointer}
-#pop .b.main{background:var(--mw-primary);color:var(--mw-primary-foreground)}
-#pop .b:hover{background:var(--mw-primary);color:var(--mw-primary-foreground)}#pop .b.main:hover{background:#000}
-#pop .step-n{font-size:12px;text-transform:uppercase;letter-spacing:var(--mw-tracking-label);color:var(--mw-muted-text);font-weight:600}
-@media(min-width:1600px){#pop .scroll img{width:90vw}#pop .cap{font-size:32px}#pop .b{min-height:68px;min-width:220px;font-size:20px}#pop img{max-height:calc(90vh - 200px)}#pop .step-n{font-size:16px}}
-@media(min-width:2400px){#pop .step{zoom:1.333}}@media(min-width:3200px){#pop .step{zoom:2}}
-</style>
-<div id="pop" role="dialog" aria-modal="true" aria-label="Today">
-<div class="step on" id="s1"><span class="step-n">1 of 2</span>
-<img src="popup/karpathy-ai-funnel-white.png" width="2400" height="1600" alt="Karpathy's AI Funnel">
-<a class="cap mw-hover" href="https://x.com/i/status/2109361546505966046" target="_blank" rel="noopener">Karpathy's AI Funnel</a>
-<div class="row"><button class="b main mw-hover" id="pnext">Next</button><button class="b mw-hover" id="pc1">Close</button></div></div>
-<div class="step" id="s2"><span class="step-n">2 of 2</span>
-<div class="scroll"><img src="popup/org-chart-current.png" alt="Current org chart: Max, Grok Bot, then Work, Personal and AI Resources with their agents"></div>
-<p class="hint">Swipe sideways to see the whole chart</p>
-<span class="cap">Current Org Chart</span>
-<div class="row"><button class="b main mw-hover" id="pc2">Close</button></div></div></div>
-<script>(function(){
-var d=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-if(d!=='2026-10-13')return;
-var p=document.getElementById('pop'),s1=document.getElementById('s1'),s2=document.getElementById('s2'),step=1;
-function btns(){return [].slice.call((step===1?s1:s2).querySelectorAll('a,button'))}
-function adv(){if(step===1){step=2;s1.classList.remove('on');s2.classList.add('on');document.getElementById('pc2').focus();var sc=s2.querySelector('.scroll');sc.scrollLeft=(sc.scrollWidth-sc.clientWidth)/2}else{p.classList.remove('on')}}
-p.classList.add('on');document.getElementById('pnext').focus();
-document.getElementById('pnext').onclick=adv;document.getElementById('pc1').onclick=adv;document.getElementById('pc2').onclick=adv;
-p.addEventListener('click',function(e){if(e.target===p)adv()});
-document.addEventListener('keydown',function(e){if(!p.classList.contains('on'))return;var k=e.key,c=e.keyCode,a=document.activeElement;
-if(k==='Enter'&&a&&a.tagName==='A')return;
-if(k==='Enter'&&a&&a.tagName==='BUTTON'){e.preventDefault();e.stopImmediatePropagation();a.click();return}
-if(k==='Escape'||k==='GoBack'||k==='BrowserBack'||k==='Backspace'||c===461||c===10009||k==='Enter'){e.preventDefault();e.stopImmediatePropagation();adv();return}
-if(k==='Tab'||k.indexOf('Arrow')===0){var sc=step===2&&(k==='ArrowLeft'||k==='ArrowRight')?s2.querySelector('.scroll'):null;if(sc&&sc.scrollWidth>sc.clientWidth){sc.scrollLeft+=(k==='ArrowRight'?160:-160)}
-e.preventDefault();e.stopImmediatePropagation();if(sc)return;var f=btns(),i=f.indexOf(a),bk=k==='ArrowLeft'||k==='ArrowUp'||(k==='Tab'&&e.shiftKey);f[(i+(bk?f.length-1:1))%f.length].focus()}},true);
-})();</script></body></html>
+</script></body></html>
