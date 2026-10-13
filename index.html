@@ -102,4 +102,30 @@ const h=location.hash.slice(1);if(document.getElementById('t-'+h))show(h);
 document.getElementById('share').onclick=async e=>{const url=location.href.split('#')[0],text='Apps Home';
 if(navigator.share){try{await navigator.share({title:text,text,url});return}catch(x){if(x.name==='AbortError')return}}
 try{await navigator.clipboard.writeText(url);e.target.textContent='Copied';setTimeout(()=>e.target.textContent='Share',1600)}catch(x){location.href='sms:?&body='+encodeURIComponent(text+' '+url)}};
-</script></body></html>
+</script><style>
+#pop{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:5vh 5vw;background:rgba(250,246,238,.92);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+#pop.on{display:flex}
+#pop .box{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:100%;max-height:100%}
+#pop img{display:block;max-width:100%;max-height:calc(90vh - 140px);width:auto;height:auto;border:1px solid var(--mw-border);background:#fff;box-shadow:0 10px 40px rgba(10,10,10,.12)}
+#pop .cap{font-family:var(--mw-font-heading);font-weight:700;font-size:22px;color:var(--mw-foreground);text-decoration:none;border-bottom:1px solid rgba(10,10,10,.3)}
+#pop .cap:hover{border-color:var(--mw-foreground)}
+#pop .x{min-height:56px;min-width:200px;border:2px solid var(--mw-primary);background:#fff;color:var(--mw-primary);font:600 16px var(--mw-font-body);text-transform:uppercase;letter-spacing:var(--mw-tracking-label);border-radius:0;cursor:pointer}
+#pop .x:hover{background:var(--mw-primary);color:var(--mw-primary-foreground)}
+@media(min-width:1600px){#pop .cap{font-size:32px}#pop .x{min-height:68px;min-width:260px;font-size:20px}#pop img{max-height:calc(90vh - 180px)}}
+@media(min-width:2400px){#pop .box{zoom:1.333}}@media(min-width:3200px){#pop .box{zoom:2}}
+</style>
+<div id="pop" role="dialog" aria-modal="true" aria-label="Karpathy's AI Funnel"><div class="box">
+<img src="popup/karpathy-ai-funnel.jpg" width="1536" height="1024" alt="Karpathy's AI Funnel graphic">
+<a class="cap mw-hover" href="https://x.com/i/status/2109361546505966046" target="_blank" rel="noopener">Karpathy's AI Funnel</a>
+<button class="x mw-hover" id="popx">Close</button></div></div>
+<script>(function(){
+var d=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Bangkok',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+if(d!=='2026-10-13')return;
+var p=document.getElementById('pop'),x=document.getElementById('popx'),last=document.activeElement;
+function close(){if(!p.classList.contains('on'))return;p.classList.remove('on');(last&&last.focus?last:document.body).focus&&last&&last.focus()}
+p.classList.add('on');x.focus();
+x.onclick=close;p.addEventListener('click',function(e){if(e.target===p)close()});
+document.addEventListener('keydown',function(e){if(!p.classList.contains('on'))return;var k=e.key,c=e.keyCode;
+if(k==='Escape'||k==='GoBack'||k==='BrowserBack'||k==='Backspace'||c===461||c===10009||(k==='Enter'&&document.activeElement!==p.querySelector('.cap'))){e.preventDefault();e.stopImmediatePropagation();close();return}
+if(k==='Tab'||k.indexOf('Arrow')===0){e.preventDefault();e.stopImmediatePropagation();var f=[p.querySelector('.cap'),x],i=f.indexOf(document.activeElement);f[(i+1)%2].focus()}},true);
+})();</script></body></html>
