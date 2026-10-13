@@ -109,4 +109,4 @@ const h=location.hash.slice(1);if(document.getElementById('t-'+h))show(h);
 document.getElementById('share').onclick=async e=>{const url=location.href.split('#')[0],text='Apps Home';
 if(navigator.share){try{await navigator.share({title:text,text,url});return}catch(x){if(x.name==='AbortError')return}}
 try{await navigator.clipboard.writeText(url);e.target.textContent='Copied';setTimeout(()=>e.target.textContent='Share',1600)}catch(x){location.href='sms:?&body='+encodeURIComponent(text+' '+url)}};
-</script></body></html>
+</script><script src="ptr.js" defer></script></body></html>
